@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="payment_payment_form_method" inherit_id="payment.method_form">
+        <xpath expr="//t[@t-if='is_test']" position="after">
+            <t t-if="mode != 'validation' and provider_sudo.is_support_fees(pm_sudo)">
+                <t t-set="fees" t-value="provider_sudo.compute_fees(pm_sudo, amount, currency=currency, partner_id=partner_id)"/>
+                <t t-if="fees > 0">
+                    <span class="badge rounded-pill text-bg-secondary ms-1">
+                        +
+                        <t t-esc="fees" t-options="{'widget': 'monetary', 'display_currency': currency}" />
+                        Fees
+                    </span>
+                </t>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="payment_payment_token_form" inherit_id="payment.token_form">
+        <xpath expr="//t[@t-if='is_test']" position="after">
+            <div>
+                <t t-if="mode != 'validation' and token_sudo.provider_id.is_support_fees(token_sudo.payment_method_id)">
+                    <t t-set="fees" t-value="token_sudo.provider_id.compute_fees(token_sudo.payment_method_id, amount, currency=currency, partner_id=partner_id)"/>
+                    <t t-if="fees > 0">
+                        <span class="badge rounded-pill text-bg-secondary ms-1">
+                            +
+                            <t t-esc="token_sudo.provider_id.compute_fees(token_sudo.payment_method_id, amount, currency=currency, partner_id=partner_id)" t-options="{'widget': 'monetary', 'display_currency': currency}" />
+                            Fees
+                        </span>
+                    </t>
+                </t>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>
