@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_payment_form_hide_refund_stripe_fees" model="ir.ui.view">
+        <field name="name">account.payment.form.refund.stripe.card.ach.fees</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_form"/>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_refund_wizard']" position="attributes">
+                <attribute name="invisible">payment_method_code in ['ach_charge_fees','card_charge_fees']</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
